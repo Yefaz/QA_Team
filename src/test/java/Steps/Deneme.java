@@ -1,3 +1,5 @@
+package Steps;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +18,7 @@ import static io.restassured.RestAssured.*;
 
 public class Deneme extends APITestCase {
 
-    public static final String BASE_URL = "https://testing-app.witwiser.io";
+
     @Test
     public void Deneme() {
 
@@ -47,21 +49,14 @@ public class Deneme extends APITestCase {
 
     @Test
     public void Creat() {
-        String random =  UUID.randomUUID().toString();
 
-        String postdata = "{\n" +
-                "    \"firstName\": \"asdasdaa\",\n" +
-                "    \"lastName\": \"asfeaa\",\n" +
-                "    \"username\": \""+ random +"\",\n"+
-                "    \"email\": \""+random+"@witwiser.io\"\n" +
-                "}";
 
         given().header("secret_key",SECRET_KEY)
-                .header("Content-Type", "application/json")
-                .header("host", "testing-app.witwiser.io")
-                .body(postdata)
+                .header("Content-Type", CONTENT_TYPE)
+                .header("host", HOST)
+                .body(POST_DATA)
                 .when()
-                .post(BASE_URL+"/api/v1/users")
+                .post(POST_URL)
                 .then().statusCode(200)
         ;
 

@@ -6,33 +6,34 @@ import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.UUID;
+
 import static io.restassured.RestAssured.given;
 
-public class Cases {
-    String postdata = "{\n" +
-            "    \"firstName\": \"asdasdaa\",\n" +
-            "    \"lastName\": \"asfeaa\",\n" +
-            "    \"username\": \"aeffffkkgaasea.user3\",\n" +
-            "    \"email\": \"eafg44ffkkaava.user3@witwiser.io\"\n" +
-            "}";
+public class Cases extends APITestCase
+{
+    String random =  UUID.randomUUID().toString();
+
 
     @Given("user is created")
     public void connect_the_post_url() {
-        given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
-                .header("Content-Type", "application/json")
-                .header("host", "testing-app.witwiser.io")
-                .body(postdata).
-        when().post("https://testing-app.witwiser.io/api/v1/users").then().statusCode(200);
+        given().header("secret_key",SECRET_KEY)
+                .header("Content-Type", CONTENT_TYPE)
+                .header("host", HOST)
+                .body(POST_DATA)
+                .when()
+                .post(POST_URL)
+                .then().statusCode(200);
 
     }
 
     @Given("Failed creat")
     public void failed_creat() {
-        given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
-                .header("Content-Type", "application/json")
-                .header("host", "testing-app.witwiser.io")
-                .body(postdata).
-                when().post("https://testing-app.witwiser.io/api/v1/users").
+        given().header("secret_key",SECRET_KEY)
+                .header("Content-Type", CONTENT_TYPE)
+                .header("host", HOST)
+                .body(STATİC_DATA).
+                when().post(POST_URL).
                 then().statusCode(500).body("errorMessage",Matchers.equalTo("Username and E-mail are already used."));
     }
 
@@ -40,7 +41,7 @@ public class Cases {
     public void listing_of_users() {
         given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
                 .when()
-                .get("https://testing-app.witwiser.io/api/v1/users/1ed95a53-86b4-5f69-ddf9-01f2d048822b")
+                .get(GET_URL)
                 .then()
                 .statusCode(200)
                 .log().all();
