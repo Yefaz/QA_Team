@@ -9,12 +9,14 @@ import model.Result;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.UUID;
 
 
 import static io.restassured.RestAssured.*;
 
-public class Deneme {
+public class Deneme extends APITestCase {
 
+    public static final String BASE_URL = "https://testing-app.witwiser.io";
     @Test
     public void Deneme() {
 
@@ -45,20 +47,21 @@ public class Deneme {
 
     @Test
     public void Creat() {
+        String random =  UUID.randomUUID().toString();
+
         String postdata = "{\n" +
                 "    \"firstName\": \"asdasdaa\",\n" +
                 "    \"lastName\": \"asfeaa\",\n" +
-                "    \"username\": \"aefhhaasea.user3\",\n" +
-                "    \"email\": \"eaf9gaava.user3@witwiser.io\"\n" +
+                "    \"username\": \""+ random +"\",\n"+
+                "    \"email\": \""+random+"@witwiser.io\"\n" +
                 "}";
 
-
-        given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
+        given().header("secret_key",SECRET_KEY)
                 .header("Content-Type", "application/json")
                 .header("host", "testing-app.witwiser.io")
                 .body(postdata)
                 .when()
-                .post("https://testing-app.witwiser.io/api/v1/users")
+                .post(BASE_URL+"/api/v1/users")
                 .then().statusCode(200)
         ;
 
@@ -114,10 +117,17 @@ public class Deneme {
                 .thenReturn().asString();
 
 
-        Result user = objectMapper.reader()
+        Result users = objectMapper.reader()
                 .forType(Result.class).readValue(postdatasf);
 
-        System.out.println(user.getSessions().size());
+        boolean result = users.getSessions().stream().anyMatch(session -> session.getTestTakerEmail().equals("Test3@test.com"));
+        if(result){
+            System.out.println("session bulundu.");
+        } else {
+            System.out.println("sesion bulunamadı");
+        }
+
+        System.out.println(users.getSessions().size());
 
 
     }
