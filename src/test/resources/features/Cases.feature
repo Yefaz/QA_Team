@@ -15,3 +15,9 @@ Feature:Assessment Test
 
   Scenario: Case3.2
     Given Failed session
+
+  Scenario: Case4.1
+    Given It is seen that the created session is listed.
+
+  Scenario: Case4.2
+    Given Total number of sessions listed

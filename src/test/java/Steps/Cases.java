@@ -1,7 +1,11 @@
 package Steps;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import model.Result;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -87,6 +91,58 @@ public class Cases extends APITestCase
                 .when()
                 .post("https://testing-app.witwiser.io/api/v1/sessions")
                 .then().statusCode(404).body("errorMessage",Matchers.equalTo("error.sessionTemplate.notFound"));
+
+    }
+    @Given("It is seen that the created session is listed.")
+    public void it_is_seen_that_the_created_session_is_listed() throws JsonProcessingException {
+
+            String postdata = "{\r\n    \"testTakerEmail\": \"Test3@test.com\"\r\n}";
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            String postdatasf = given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
+                    .header("Content-Type", "application/json")
+                    .header("host", "testing-app.witwiser.io")
+                    .body(postdata)
+                    .when()
+                    .post("https://testing-app.witwiser.io/api/v1/sessions/getTestTakerSessions")
+                    .thenReturn().asString();
+
+
+            Result users = objectMapper.reader()
+                    .forType(Result.class).readValue(postdatasf);
+
+            boolean result = users.getSessions().stream().anyMatch(session -> session.getTestTakerEmail().equals("Test3@test.com"));
+            if(result){
+                System.out.println("session bulundu.");
+            } else {
+                System.out.println("sesion bulunamadı");
+            }
+    }
+    @Given("Total number of sessions listed")
+    public void total_number_of_sessions_listed() {
+        String postdata = "{\r\n    \"testTakerEmail\": \"Test3@test.com\"\r\n}";
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        String postdatasf = given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
+                .header("Content-Type", "application/json")
+                .header("host", "testing-app.witwiser.io")
+                .body(postdata)
+                .when()
+                .post("https://testing-app.witwiser.io/api/v1/sessions/getTestTakerSessions")
+                .thenReturn().asString();
+
+
+        Result users = null;
+        try {
+            users = objectMapper.reader()
+                    .forType(Result.class).readValue(postdatasf);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+
+            System.out.println(users.getSessions().size());
+
 
     }
 
