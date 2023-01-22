@@ -52,21 +52,14 @@ public class Cases extends APITestCase
     }
     @Given("session assignment")
     public void session_assignment() {
-        String postdata = "{\r\n    \"candidates\": [\r\n        \"id:1ed876d4-a065-f779-d201-0300980c71a6\"\r\n    ]," +
-                "\r\n    \"interviewer\": null," +
-                "\r\n    \"periodStartDate\": \"2023-01-17T12:00:00Z\"," +
-                "\r\n    \"periodEndDate\": \"2023-01-22T22:00:00Z\"," +
-                "\r\n    \"interviewStartDate\": null," +
-                "\r\n    \"examType\": \"TEST\"," +
-                "\r\n    \"sessionTemplateId\": \"1ed8b70a-fb1b-35d9-d204-090228958efe\"," +
-                "\r\n    \"informCandidate\": false,\r\n    \"assignmentType\": \"USER\"," +
-                "\r\n    \"groupId\": null\r\n}";
 
 
-        given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
-                .header("Content-Type", "application/json")
-                .header("host", "testing-app.witwiser.io")
-                .body(postdata)
+
+        given().header("secret_key", SECRET_KEY)
+                .header("Content-Type", CONTENT_TYPE)
+
+                .header("host", HOST)
+                .body(SECİON_DATA)
                 .when()
                 .post("https://testing-app.witwiser.io/api/v1/sessions")
                 .then().statusCode(200);
@@ -84,9 +77,9 @@ public class Cases extends APITestCase
                 "\r\n    \"groupId\": null\r\n}";
 
 
-        given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
-                .header("Content-Type", "application/json")
-                .header("host", "testing-app.witwiser.io")
+        given().header("secret_key", SECRET_KEY)
+                .header("Content-Type", CONTENT_TYPE)
+                .header("host", HOST)
                 .body(postdata)
                 .when()
                 .post("https://testing-app.witwiser.io/api/v1/sessions")
@@ -99,9 +92,9 @@ public class Cases extends APITestCase
             String postdata = "{\r\n    \"testTakerEmail\": \"Test3@test.com\"\r\n}";
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            String postdatasf = given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
-                    .header("Content-Type", "application/json")
-                    .header("host", "testing-app.witwiser.io")
+            String postdatasf = given().header("secret_key", SECRET_KEY)
+                    .header("Content-Type", CONTENT_TYPE)
+                    .header("host", HOST)
                     .body(postdata)
                     .when()
                     .post("https://testing-app.witwiser.io/api/v1/sessions/getTestTakerSessions")
@@ -123,9 +116,9 @@ public class Cases extends APITestCase
         String postdata = "{\r\n    \"testTakerEmail\": \"Test3@test.com\"\r\n}";
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        String postdatasf = given().header("secret_key", "3Uvz513R74CHPqS3of8r3wJkzJ3rndfp4T0STnH5bGo4VjQk4e2yx9Y0BrDgF9kEYmeYtW83Cp0zrQy5BMJhVxZEqWxAFlQmgO736ujwMhoH6U36ABL7EArnpzgQTo")
-                .header("Content-Type", "application/json")
-                .header("host", "testing-app.witwiser.io")
+        String postdatasf = given().header("secret_key", SECRET_KEY)
+                .header("Content-Type", CONTENT_TYPE)
+                .header("host", HOST)
                 .body(postdata)
                 .when()
                 .post("https://testing-app.witwiser.io/api/v1/sessions/getTestTakerSessions")

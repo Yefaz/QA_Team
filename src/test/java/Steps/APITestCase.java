@@ -22,4 +22,13 @@ public class APITestCase {
             "    \"username\": \"aefghjgaasea.user3\",\n"+
             "    \"email\": \"eafgfghjaava.user3@witwiser.io\"\n" +
             "}";
+    public static final String SECİON_DATA = "{\r\n    \"candidates\": [\r\n        \"id:1ed876d4-a065-f779-d201-0300980c71a6\"\r\n    ]," +
+            "\r\n    \"interviewer\": null," +
+            "\r\n    \"periodStartDate\": \"2023-01-17T12:00:00Z\"," +
+            "\r\n    \"periodEndDate\": \"2023-01-22T22:00:00Z\"," +
+            "\r\n    \"interviewStartDate\": null," +
+            "\r\n    \"examType\": \"TEST\"," +
+            "\r\n    \"sessionTemplateId\": \"1ed8b70a-fb1b-35d9-d204-090228958efe\"," +
+            "\r\n    \"informCandidate\": false,\r\n    \"assignmentType\": \"USER\"," +
+            "\r\n    \"groupId\": null\r\n}";
 }
